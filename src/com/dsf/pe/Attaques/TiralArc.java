@@ -8,7 +8,20 @@ public class TiralArc extends Attaque {
     }
 
     @Override
-    public void Combat(Personnage victime) {
+    /**
+     * Implémentation de la méthode Combat
+     * Effectue des dommages égaux à l’agilité du joueur sur l’adversaire.
+     */
+    public boolean Combat(Personnage bourrean, Personnage victime) {
+        int vie = victime.getVie();
+        vie -= bourrean.getAgilite();
 
+        if( vie>0) {
+            victime.setVie(vie);
+            return true;
+        } else {
+            victime.setVie(0);
+            return false;
+        }
     }
 }

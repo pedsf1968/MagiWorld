@@ -8,7 +8,14 @@ public class Concentration extends Attaque {
     }
 
     @Override
-    public void Combat(Personnage victime) {
+    /**
+     * Implémentation de la méthode Combat
+     * Le joueur gagne son niveau divisé par 2 en agilité.
+     */
+    public boolean Combat(Personnage bourrean, Personnage victime) {
 
+        int agilitebourreau = bourrean.getAgilite() + bourrean.getNiveau()/2;
+        bourrean.setAgilite(agilitebourreau);
+        return true;
     }
 }
