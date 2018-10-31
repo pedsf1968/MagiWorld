@@ -3,7 +3,7 @@ public class Main {
 
     private static int NOMBRE_JOUEURS = 2; //define 2 characters
 
-    /**
+     /**
      * Main
      * @param args
      */
