@@ -10,9 +10,9 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class AttaquesTest {
-    Personnage guerrier = new Guerrier(50,50,30,20);
-    Personnage rodeur = new Rodeur(50,20,50,30);
-    Personnage mage = new Mage(50,25,25,50);
+    Personnage guerrier = new Guerrier(100,50,30,20);
+    Personnage rodeur = new Rodeur(100,20,50,30);
+    Personnage mage = new Mage(100,25,25,50);
 
     @Test
     public void Given_GuerrierAndRodeur_When_AttaqueBasique_Then_VieMoinsForce(){
