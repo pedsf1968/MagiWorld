@@ -9,11 +9,17 @@ import com.dsf.pe.Personnages.Personnage;
 public abstract class Attaque {
     protected  String nom;
 
+    // GETTERS
+    public String getNom() {
+        return nom;
+    }
+
+    // METHODS
     /**
      * definition de la méthode abstraite Combat
-     * @param bourrean celui qui attaque
+     * @param bourreau celui qui attaque
      * @param victime celui qui est attaqué
-     * @return return true si la victime est toujours vivante false sinon
+     * @return true s'il n'y a pas de mort false sinon
      */
-    public abstract boolean Combat(Personnage bourrean, Personnage victime);
+    public abstract boolean Combat(Personnage bourreau, Personnage victime);
 }

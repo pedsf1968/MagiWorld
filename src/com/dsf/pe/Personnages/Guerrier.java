@@ -5,8 +5,9 @@ import com.dsf.pe.Attaques.CoupdeRage;
 
 public class Guerrier extends Personnage {
 
-    public Guerrier(int niveau, int force, int agilite, int intelligence) {
-        super(niveau, force, agilite, intelligence);
+    // CONSTRUCTOR
+    public Guerrier(String nom, int niveau, int force, int agilite, int intelligence) {
+        super(nom, niveau, force, agilite, intelligence);
         this.type = "Guerrier";
         this.attaqueBasique = new CoupdEpee();
         this.attaqueSpeciale = new CoupdeRage();

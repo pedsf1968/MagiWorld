@@ -5,58 +5,49 @@ import com.dsf.pe.Personnages.Mage;
 import com.dsf.pe.Personnages.Personnage;
 import com.dsf.pe.Personnages.Rodeur;
 
-import java.util.HashMap;
-import java.util.InputMismatchException;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 public class Jeu {
-    private int nombrePersonnage;
-    Map<Integer,Personnage> personnages= new HashMap<Integer,Personnage>();
+    static int JOUEUR1 = 0;
+    static int JOUEUR2 = 1;
+
+    private int nombrePersonnage = 0;
+    ArrayList<Personnage> personnages = new ArrayList<Personnage>();
     Scanner sc = new Scanner(System.in);
 
     /**
-     * Initialise the game
-      * @param nombrejoueurs number of users
-     * @return a HashMap who contain all characters
+     * Initialise the game and the ArrayList of characters
+     * @param nombrejoueurs number of users
      */
-    public Map<Integer, Personnage> Initialise(int nombrejoueurs){
-        nombrePersonnage = 0;
-        for(int i=0;i<nombrejoueurs;i++){
+    public void initialise(int nombrejoueurs){
+        for(int i=1;i<=nombrejoueurs;i++){
             System.out.println("Création du personnage du Joueur " + i);
-            // Ask type of personnage and parameters to the user
+            // Ask class of characters and parameters to the user
+            String nom = "Joueur " + i;
             int type = askSomething("Veuillez choisir la classe de votre personnage (1 : Guerrier, 2 : Rôdeur, 3 : Mage)" ,1,3);
             int niveau = askSomething("Niveau du personnage ?",0,100);
             int force = askSomething("Force du personnage ?",0,100);
-            int agilite = askSomething("Agilité du personnage",0,100-force);
-            int intelligence = askSomething("Intelligence du personnage", 0,100-force-agilite);
+            int agilite = askSomething("Agilité du personnage ?",0,100-force);
+            int intelligence = askSomething("Intelligence du personnage ?", 0,100-force-agilite);
 
-            //Add new personnage depending on the type
+            //Add new character depending on the type
             switch (type){
-                case 0:
-                    addPersonnage(i, new Guerrier(niveau,force,agilite,intelligence));
-                    break;
                 case 1:
-                    addPersonnage(i, new Rodeur(niveau,force,agilite,intelligence));
+                    this.personnages.add( new Guerrier(nom,niveau,force,agilite,intelligence));
+                    System.out.println( "Woarg "+ personnages.get(i-1).toString());
                     break;
                 case 2:
-                    addPersonnage(i, new Mage(niveau,force,agilite,intelligence));
+                    this.personnages.add( new Rodeur(nom,niveau,force,agilite,intelligence));
+                    System.out.println( "Shuuut "+ personnages.get(i-1).toString());
+                    break;
+                case 3:
+                    this.personnages.add( new Mage(nom,niveau,force,agilite,intelligence));
+                    System.out.println( "Abracadabra "+ personnages.get(i-1).toString());
                     break;
             }
+            this.nombrePersonnage+=1;
         }
-        return personnages;
     }
-
-    /**
-     * Add personnage in the HashMap
-     * @param numero the index of the personnage
-     * @param personnage the type of personnage
-     */
-    private void addPersonnage(int numero, Personnage personnage){
-        this.personnages.put(numero,personnage);
-        this.nombrePersonnage+=1;
-    }
-
 
     /**
      * Ask something to the user displaying a message. test if the result is in the range
@@ -83,6 +74,43 @@ public class Jeu {
         } while(!responseIsGood);
 
         return reponse;
+    }
+
+
+    /**
+     * Start the game and give the hand for each users
+     */
+    public void execute() {
+        boolean vivant = true;
+        int bourreau = JOUEUR1;
+        int victime = JOUEUR2;
+
+        while ( attaque(bourreau, victime)){
+            // reverse users
+            if(bourreau==JOUEUR1) {
+                bourreau = JOUEUR2;
+                victime = JOUEUR1;
+            } else {
+                bourreau = JOUEUR1;
+                victime = JOUEUR2;
+            }
+        }
+    }
+
+    /**
+     * Ask to the user his choice for the attack and do it
+     * @param joueur1 the user who make the attack
+     * @param joueur2 the user who is attacked
+     * @return true if no one die
+     */
+    public boolean attaque(int joueur1, int joueur2) {
+        String message = personnages.get(joueur1).getNom()+" (" + personnages.get(joueur1).getVie() + " Vitalité) Veuillez choisir votre action (1: Attaque Basique, 2: Attaque Spéciale)";
+
+        if ( askSomething( message,1, 2) == 1 )
+            return personnages.get(joueur1).attaqueBasique.Combat(personnages.get(joueur1), personnages.get(joueur2));
+        else
+            return personnages.get(joueur1).attaqueSpeciale.Combat(personnages.get(joueur1), personnages.get(joueur2));
+
     }
 
 }
